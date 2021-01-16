@@ -4,6 +4,7 @@ import os
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
 
+
 def localize_objects(path):
     """Localize objects in the local image.
 
@@ -55,5 +56,5 @@ def localize_objects(path):
 
 
 if __name__ == "__main__":
-    path = "./images/fridge.jfif"
+    path = "./images/fridge.jpg"
     localize_objects(path)
