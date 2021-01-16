@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 
 import "./captureScreen.styles.scss"
 
@@ -7,6 +7,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 const CaptureScreen = () => {
     const imageCanvas = useRef(null)
+    // const [hasVideoAccess,]
 
     useEffect(()=>{
         if (!('mediaDevices' in navigator)){
