@@ -1,6 +1,8 @@
 from PIL import Image, ImageDraw
 from google.cloud import vision
+import os
 
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
 
 def localize_objects(path):
     """Localize objects in the local image.
@@ -46,12 +48,12 @@ def localize_objects(path):
         im1 = im.crop((objectBoundary[0][0], objectBoundary[0]
                        [1], objectBoundary[2][0], objectBoundary[2][1]))
 
-        im1.save("./imgs/object_%s.jpg" % str(idx))
+        im1.save("./images/object_%s.jpg" % str(idx))
         im1.close()
     im.show()
-    im.save("./imgs/test_with_object_boundary.jpg")
+    im.save("./images/test_with_object_boundary.jpg")
 
 
 if __name__ == "__main__":
-    path = "./imgs/test.jpg"
+    path = "./images/fridge.jfif"
     localize_objects(path)
