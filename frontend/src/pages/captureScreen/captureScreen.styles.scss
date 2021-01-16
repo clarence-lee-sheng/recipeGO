@@ -96,3 +96,28 @@
         margin-bottom: 10px;
     }
 }
+
+@media only screen and (min-width: 1024px) and (min-height: 700px) {
+    .no-video-access{
+        width: 600px;
+        height: 400px;        
+    }
+
+    .image-canvas{
+        width: 600px;
+    }
+    
+    .fridge-capture{
+        width: 600px;
+        
+    }
+    
+    .capture-screen-prompt{
+        margin-bottom: 20px;
+    }
+
+    .capture-btn{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
