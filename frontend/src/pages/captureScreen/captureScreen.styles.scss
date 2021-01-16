@@ -10,13 +10,15 @@
 
 .image-canvas{
     width: 400px;
-    max-width:100%;   
+    max-width:95%;   
     background-color: rgb(218, 209, 209);
+    border-radius: 50px;
 }
 
 .fridge-capture{
+    border-radius: 50px;
     width: 400px;
-    max-width:100%;
+    max-width:95%;
 }
 
 .hidden{
@@ -97,7 +99,7 @@
     }
 }
 
-@media only screen and (min-width: 1024px) and (min-height: 700px) {
+@media only screen and (min-width: 1024px) and (min-height: 750px) {
     .no-video-access{
         width: 600px;
         height: 400px;        
