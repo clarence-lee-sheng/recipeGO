@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
 .capture-screen{
     display: flex;
     width: 100vw;
@@ -7,13 +9,13 @@
 }
 
 .image-canvas{
-    width: 512px;
+    width: 400px;
     max-width:100%;   
     background-color: rgb(218, 209, 209);
 }
 
 .fridge-capture{
-    width: 512px;
+    width: 400px;
     max-width:100%;
 }
 
@@ -22,9 +24,75 @@
 }
 
 .capture-btn{
+    background-color: rgb(61, 58, 141);
+    color: white;
     border-radius: 50%; 
     font-size: 30px;
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
+.no-video-access{
+    width: 400px;
+    max-width:100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background-color: rgb(218, 216, 216);
+    
+}
+
+
+.image-select{
+    width: 180px;
+}
+
+.capture-screen{
+    background-color: #f9fffe;
+}
+
+.capture-screen-prompt{
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+    font-size: 1.5rem;
+    background-color: #e3cee7;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    box-shadow: inset 0px -3px 3px rgb(185, 185, 185);
+}
+
+.buttons-container{
+    flex: 3 1 0;
+    background-color: #e3cee7;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-shadow: inset 0px 3px 3px rgb(175, 173, 173);
+}
+
+.get-ingredients-btn{
+    margin-top: 10px;
+    background-color:rgb(61, 58, 141);
+    width: 180px;
+    border-radius: 5px;
+    color: rgb(243, 243, 243);
+    font-size: 1.05rem;
+    box-shadow: 0px 3px 3px rgb(75, 75, 75);
+}
+
+@media only screen and (min-width: 1024px) {
+    .capture-screen-prompt{
+        margin-bottom: 20px;
+    }
+
+    .capture-btn{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 }

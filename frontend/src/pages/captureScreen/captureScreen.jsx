@@ -89,19 +89,23 @@ const CaptureScreen = () => {
     }
 
     return(
-        <div className="capture-screen page">
-            <div>Take a picture of your fridge :D</div>
-            {hasVideoAccess ? <video className="fridge-capture"/> : ''}
-            <canvas className={`image-canvas ${isImageTaken ? "": "hidden"}`} width="320px" height="240px"/>
-            <button className="capture-btn" onClick={takePicture} disabled={isImageTaken ? true:false}>
-                <FontAwesomeIcon icon={faCamera}/>
-            </button>
-            <div className="image-picker">
-                <input ref={fileReader} onChange={e=>{convertFileToBlob(fileReader.current.files[0])}} className="image-select" type="file" accept="image/*"></input>
+        <div className="page">
+            <div className="capture-screen container">
+                <div className="capture-screen-prompt">Take a picture of your fridge :D</div>
+                {hasVideoAccess ? <video className="fridge-capture"/> : picture ? "" : <div className="no-video-access">No camera access</div>}
+                <canvas className={`image-canvas ${isImageTaken ? "": "hidden"}`} width="320px" height="240px"/>
+                <button className="capture-btn" onClick={takePicture} disabled={isImageTaken||!hasVideoAccess ? true:false}>
+                    <FontAwesomeIcon icon={faCamera}/>
+                </button>
+                <div className="buttons-container">
+                <div className="image-picker">
+                    <input ref={fileReader} onChange={e=>{convertFileToBlob(fileReader.current.files[0])}} className="image-select" type="file" accept="image/*"></input>
+                </div>
+                <button className="get-ingredients-btn" onClick={sendImage}> 
+                    Get Recipes
+                </button>
+                </div>
             </div>
-            <button onClick={sendImage}> 
-                Get Ingredients
-            </button>
         </div>
     )
 }
