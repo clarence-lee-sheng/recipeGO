@@ -4,7 +4,7 @@ import io
 client = vision.ImageAnnotatorClient()
 
 # Loads the image into memory
-with io.open("./images/fridge.jpg", 'rb') as image_file:
+with io.open("../images/fridge.jpg", 'rb') as image_file:
     content = image_file.read()
 
 image = vision.Image(content=content)
