@@ -14,7 +14,7 @@ def home():
 @app.route('/imglabel', methods=['GET'])
 def getImageLabel():
     lables = image_label("../images/fridge3.jpg")
-    return lables
+    return str(lables)
 
 
 app.run()
