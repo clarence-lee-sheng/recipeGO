@@ -3,6 +3,13 @@ import "./loginPage.styles.scss"
 
 const { Component } = React
 
+const Nexmo = require('nexmo');
+
+const nexmo = new Nexmo({
+  apiKey: '744e6239',
+  apiSecret: 'R3gmpxcUBGmavDSO',
+});
+
 class LoginScreen extends Component {
   constructor(props){
     super(props)
@@ -24,9 +31,7 @@ class LoginScreen extends Component {
           <form>
             <h2>Sign Up!</h2>
             <fieldset>
-              <legend>Create Account</legend>
-              <ul>
-               
+              <ul> 
                 <li>
                   <label for="username">Username:</label>
                   <input type="username" id="username" required/>
@@ -41,8 +46,8 @@ class LoginScreen extends Component {
                 </li>
               </ul>
             </fieldset>
-            <button>Submit</button>
-            <button type="button" onClick={ () => this.changeView("logIn")}>Have an Account?</button>
+            <button type="button"  onClick={ () => this.changeView("PWReset")} href="#">Create Account</button>
+            <button type="button"  onClick={ () => this.changeView("logIn")}>Have an Account?</button>
           </form>
         )
         break
@@ -51,7 +56,6 @@ class LoginScreen extends Component {
           <form>
             <h2>Welcome Back!</h2>
             <fieldset>
-              <legend>Log In</legend>
               <ul>
                 <li>
                   <label for="phonenum">Phone number:</label>
@@ -61,10 +65,6 @@ class LoginScreen extends Component {
                   <label for="password">Password:</label>
                   <input type="password" id="password" required/>
                 </li>
-                <li>
-                  <i/>
-                  <a onClick={ () => this.changeView("PWReset")} href="#">Forgot Password?</a>
-                </li>
               </ul>
             </fieldset>
             <button>Login</button>
@@ -73,25 +73,47 @@ class LoginScreen extends Component {
         )
         break
       case "PWReset":
+        nexmo.verify.request({
+         //  number: 'document.getElementById("phonenum").value',
+           number: '15199028700',
+            brand: 'Vonage',
+            code_length: '4'
+          }, (err, result) => {
+            console.log(err ? err : result)
+          });
         return (
           <form>
-          <h2>Reset Password</h2>
+          <h2>Verify phone number</h2>
           <fieldset>
-            <legend>Password Reset</legend>
             <ul>
               <li>
-                <em>A reset link will be sent to your phone number!</em>
+                <em>A PIN code was sent to your phone number!</em>
               </li>
               <li>
-                <label for="phonenum">Phone number:</label>
-                <input type="phonenum" id="phonenum" required/>
+                <label for="pin">PIN received:</label>
+                <input type="pin" id="pin" required/>
               </li>
             </ul>
           </fieldset>
-          <button>Send Reset Link</button>
+          <button type="button" onClick={ () => this.changeView("confirmPIN")}>Verify</button>
           <button type="button" onClick={ () => this.changeView("logIn")}>Go Back</button>
         </form>
         )
+        case "confirmPIN":
+            nexmo.verify.check({
+                request_id: 'abe401eecd2744d290058eaf0e8ef182',
+                code: '1520'
+              }, (err, result) => {
+                console.log(err ? err : result)
+              });
+            return(
+                <form>
+              
+
+              
+                
+                </form>  
+            ) 
       default:
         break
     }

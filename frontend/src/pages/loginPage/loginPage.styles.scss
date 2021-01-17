@@ -21,13 +21,13 @@ section#entry-page {
     grid-gap: 10px;
     margin: auto 0;
     padding: 20px;
-    background-color: rgba(255, 239, 195, 0.9);
+    background-color: rgba(255, 255, 255, 0.979);
     border-radius: 10px;
-    box-shadow: 0 32px 64px rgba(216, 25, 25, 0.938);
+    box-shadow: 0 32px 64px rgba(255, 255, 255, 0.938);
     h2 {
       margin-bottom: 5px;
       text-align: center;
-      text-shadow: 0 4px 16px #fff;
+      text-shadow: 0 4px 16px rgb(255, 255, 255);
       font-size: 30px;
       font-weight: 100;
     }
@@ -37,11 +37,7 @@ section#entry-page {
       border: none;
       border-radius: 5px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      legend {
-        padding: 5px;
-        background-color: #fff;
-        border-radius: 5px;
-      }
+     
       ul {
         margin: 0;
         padding: 0;
@@ -77,13 +73,20 @@ section#entry-page {
       border:1px solid rgba(0,0,0,0);
       border-radius: 5px;
       background: #fff;
+      
+    //  box-shadow: $button-shadow;
+     background-color:  rgb(58, 212, 79);
+
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
       &:hover {
         background-color: #eef;
         border: 1px solid #aaf;
       }
     }
+   
+      
   }
+
 }
 @media only screen and (min-width: 420px) {
   form {
