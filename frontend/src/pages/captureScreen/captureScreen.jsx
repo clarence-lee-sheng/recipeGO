@@ -6,8 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 import GenerateRecipePage from "../generateRecipePage/generateRecipePage"
+import RecipePage from "../recipesPage/recipesPage"
 
-const CaptureScreen = () => {
+const CaptureScreen = (props) => {
     const fileReader = useRef(null)
     const [hasVideoAccess, setVideoAccess] = useState(false)
     const [isImageTaken, setImageTaken] = useState(false)
@@ -17,6 +18,8 @@ const CaptureScreen = () => {
         {"name": "cheese"},
     ])
     const [hideIngPage, setHideIngPage] = useState(true)
+    const [hideRecipePage, setHideRecipePage] = useState(true)
+    const [recipes, setRecipes] = useState([])
 
     useEffect(()=>{
         if (!('mediaDevices' in navigator)){
@@ -60,17 +63,30 @@ const CaptureScreen = () => {
             track.stop()
         })
         setVideoAccess(false)
-        setPicture(dataURItoBlob(canvas.toDataURL()))
+        setPicture(canvas.toDataURL())
     }
 
     const sendImage = () => { 
-        let id = new Date().toISOString()
-        const formData = new FormData()
-        formData.append("image", picture, id + '.png')
-        fetch('url', {
+        fetch('http://localhost:5000/', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({image:picture.split(',')[1]})
+        }).then(res => {
+            console.log(res)
+            res.json().then(data =>{
+                data = data['info']
+                data = JSON.parse(data)
+                let ing_data = data.map(e => { return ({"name": e})})
+                receiveIngredients(ing_data)
+            })
         })
+    }
+
+    const receiveIngredients = (ing) => {
+        setIngArr(ing)
+        setHideIngPage(false)
     }
 
     useEffect(_ => console.log(picture), [picture])
@@ -91,7 +107,7 @@ const CaptureScreen = () => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.addEventListener("load", function () {
-            setPicture(dataURItoBlob(reader.result));
+            setPicture(reader.result);
           }, false);
     }
 
@@ -107,18 +123,41 @@ const CaptureScreen = () => {
         setIngArr(ingArrCopy)
     }
 
+    const recipify = () => { 
+        let ingredientsArr = ingArr.map(ing => ing.name)
+        let ingredientsStr = ingredientsArr.join(",")
+        fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsStr}&number=3&apiKey=d9d862face4943698f0a9a6952a0339d`).then(response => {
+            response.json().then(data => {
+                setRecipes(JSON.parse(JSON.stringify(data)))
+                setHideRecipePage(false)
+            })
+        })
+    }
+
     return(
         <div className="page">
             <div className="capture-screen container">
                 <div className="capture-screen-prompt">Take a picture of your fridge :D</div>
-                {hasVideoAccess ? <video className="fridge-capture"/> : picture ? "" : <div className="no-video-access">No camera access</div>}
+                {hasVideoAccess ? <video className="fridge-capture"/> : isImageTaken ? "" : <div className="no-video-access">No camera access</div>}
                 <canvas className={`image-canvas ${isImageTaken ? "": "hidden"}`} width="320px" height="240px"/>
                 <button className="capture-btn" onClick={takePicture} disabled={isImageTaken||!hasVideoAccess ? true:false}>
                     <FontAwesomeIcon icon={faCamera}/>
                 </button>
                 <div className="buttons-container">
                 <div className="image-picker">
-                    <input ref={fileReader} onChange={e=>{convertFileToBlob(fileReader.current.files[0])}} className="image-select" type="file" accept="image/*"></input>
+                    <input ref={fileReader} onChange={async e=>{
+                        await convertFileToBlob(fileReader.current.files[0])
+                        let canvas = document.querySelector(".image-canvas")
+                        // let video = document.querySelector(".fridge-capture")
+                        let context = canvas.getContext('2d')
+                        var image = new Image();
+                        image.onload = function() {
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+                        };
+                        console.log(picture)
+                        image.src = picture;
+                        setImageTaken(true)
+                    }} className="image-select" type="file" accept="image/*"></input>
                 </div>
                     <button className="get-ingredients-btn" onClick={sendImage}> 
                         Get Recipes
@@ -126,7 +165,8 @@ const CaptureScreen = () => {
                     <button className="edit-ingredients-btn" onClick={()=>setHideIngPage(false)}>add your own ingredients</button>                
                 </div>
             </div>
-            <GenerateRecipePage setHideIngPage={setHideIngPage} isHidden={hideIngPage} ingArr={ingArr} addIng={addIng} delIng={delIng}/>
+            <GenerateRecipePage recipify={recipify} setHideIngPage={setHideIngPage} isHidden={hideIngPage} ingArr={ingArr} addIng={addIng} delIng={delIng}/>
+            {hideRecipePage ? '':<RecipePage recipes={recipes}/>}
         </div>
     )
 }

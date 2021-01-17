@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+.recipe-page{
+    background-color:rgb(240, 223, 221);
+    position: absolute;
+    left:0px;
+    top: 0px;
+}
+
+.recipe-images-container{
+    display:flex; 
+    flex-flow:row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipe{
+    background:white;
+    box-shadow: 0px 5px 5px grey;
+    padding: 10px;
+    margin: 20px;
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+    justify-content: center;
+    align-items: center;
+
+}
+
+.recipe-title{
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+}
+
+.recipe-img{
+    max-width: 30%;
+}
+
+.recipe-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.retake-img-btn{
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(218, 89, 89);
+    box-shadow: 0px 5px 5px grey;
+    margin-top: 20px;
+}

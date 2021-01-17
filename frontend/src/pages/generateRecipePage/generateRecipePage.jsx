@@ -37,7 +37,7 @@ const GenerateRecipePage = (props) => {
                         <div className="minus-icon" onClick={()=>props.setHideIngPage(true)}> 
                             <FontAwesomeIcon icon={faMinus}/>                
                         </div>  
-                        <div className="recipify-btn">Recipify</div>
+                        <div onClick={props.recipify} className="recipify-btn">Recipify</div>
                     </div>  
                 </div>   
             </div>

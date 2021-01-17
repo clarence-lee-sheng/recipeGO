@@ -1,5 +1,4 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import { 
   BrowserRouter as Router, 
   Switch,
@@ -13,24 +12,21 @@ import './App.scss';
 import CaptureScreen from "./pages/captureScreen/captureScreen"
 import LoginScreen from "./pages/loginPage/loginPage"
 import LandingPage from "./pages/landingPage/landingPage"
+import RecipesPage from "./pages/recipesPage/recipesPage"
 
 function App() {
   return (
     <div className="App">
       <Router>
           <Switch>
-              <Route exact path="/">
-                  <LandingPage/>
-                  <button><Link to="/login">login Page</Link></button>
-              </Route>
               <Route path="/login">
-                  <div>login page hello world</div>      <LoginScreen/>
+                  <LoginScreen/>
                   <button><Link to="/capture">Capture Page</Link></button>
               </Route>
               <Route path="/capture">
                   <CaptureScreen/>
               </Route>
-              <Redirect to="/"/>
+              <Redirect to="/login"/>
           </Switch>
       </Router>
     </div>
