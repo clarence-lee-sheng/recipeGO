@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useState } from "react"
 import "./loginPage.styles.scss"
 
+import { 
+  Link
+} from "react-router-dom"
+
 const { Component } = React
 
 const Nexmo = require('nexmo');
@@ -67,7 +71,7 @@ class LoginScreen extends Component {
                 </li>
               </ul>
             </fieldset>
-            <button>Login</button>
+            <button className="login-btn"><Link className="login-btn-link" to="/capture">Login</Link></button>
             <button type="button" onClick={ () => this.changeView("signUp")}>Create an Account</button>
           </form>
         )
@@ -111,10 +115,8 @@ class LoginScreen extends Component {
               });
             return(
                 <form>
-              
-
-              
-                
+                <h5>Success! Phone number was verified.</h5>
+                <h5>You can now log in with your account.</h5>                 
                 </form>  
             ) 
       default:

@@ -15,7 +15,7 @@ import io
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'../ServiceAccountToken.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'./ServiceAccountToken.json'
 
 @app.route("/")
 def home():

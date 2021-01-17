@@ -144,7 +144,7 @@ const CaptureScreen = (props) => {
     const recipify = () => { 
         let ingredientsArr = ingArr.map(ing => ing.name)
         let ingredientsStr = ingredientsArr.join(",")
-        fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsStr}&number=3&apiKey=d9d862face4943698f0a9a6952a0339d`).then(response => {
+        fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsStr}&number=3&apiKey=23ff6192027a43d3b08e9efc4b0e374f`).then(response => {
             response.json().then(data => {
                 setRecipes(JSON.parse(JSON.stringify(data)))
                 setHideRecipePage(false)
@@ -190,6 +190,24 @@ const CaptureScreen = (props) => {
 
     }
 
+    useEffect(() => {
+        if (picture){
+        let canvas = document.querySelector(".image-canvas")
+            // let video = document.querySelector(".fridge-capture")
+        let context = canvas.getContext('2d')
+        var image = new Image();
+        console.log(image)
+        image.onload = function() {
+            console.log('image loaded')
+            console.log(context)
+            context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        };
+            
+        image.src = picture;
+        setImageTaken(true)
+    }
+    }, [picture])
+
     return(
         <div className="page">
             <div className="capture-screen container">
@@ -202,23 +220,7 @@ const CaptureScreen = (props) => {
                 <div className="buttons-container">
                 <div className="image-picker">
                     <input ref={fileReader} onChange={e=>{
-                        console.log(picture)
                         convertFileToBlob(fileReader.current.files[0])
-                        setTimeout(()=>{
-                        let canvas = document.querySelector(".image-canvas")
-                        // let video = document.querySelector(".fridge-capture")
-                        let context = canvas.getContext('2d')
-                        var image = new Image();
-                        console.log(image)
-                        image.onload = function() {
-                            console.log('image loaded')
-                            console.log(context)
-                            context.drawImage(image, 0, 0, canvas.width, canvas.height)
-                        };
-                        
-                        image.src = picture;
-                        setImageTaken(true)
-                    },200)
                     }} className="image-select" type="file" accept="image/*"></input>
                 </div>
                     <button className="get-ingredients-btn" onClick={sendImage}> 
