@@ -23,7 +23,7 @@ const RecipesPage = (props) => {
                         )
                     })}
                 </div>
-                <button className="retake-img-btn">Take another picture</button> 
+                <button onClick={props.toggleToCamera} className="retake-img-btn">Take another picture</button> 
             </div>          
         </div>
     )

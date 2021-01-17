@@ -101,11 +101,13 @@ class LoginScreen extends Component {
         </form>
         )
         case "confirmPIN":
+            console.log("confirming")
             nexmo.verify.check({
                 request_id: 'abe401eecd2744d290058eaf0e8ef182',
                 code: '1520'
               }, (err, result) => {
                 console.log(err ? err : result)
+                
               });
             return(
                 <form>

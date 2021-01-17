@@ -13,11 +13,11 @@
     width: 350px;
     max-width:95%;   
     background-color: rgb(218, 209, 209);
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 .fridge-capture{
-    border-radius: 50px;
+    border-radius: 10px;
     width: 350px;
     max-width:95%;
 }
@@ -45,8 +45,9 @@
     justify-content: center;
     align-items: center;
     padding: 50px;
-    background-color: rgb(218, 216, 216);
-    border-radius: 50px;
+    background-color: rgb(236, 235, 235);
+    box-shadow: 0px 3px 3px rgb(255, 226, 224);
+    border-radius: 10px;
 }
 
 
@@ -88,15 +89,24 @@
     width: 180px;
     border-radius: 5px;
     color: rgb(243, 243, 243);
-    font-size: 1.05rem;
+    font-size: 1.3rem;
     box-shadow: 0px 3px 3px rgb(75, 75, 75);
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+    transition: all 0.3s ease;
+}
+
+.get-ingredients-btn:hover, .edit-ingredients-btn:hover{
+    transform: translateY(1px)
 }
 
 .edit-ingredients-btn{
+    transition: all 0.3s ease;
     width: 180px;
     border-radius: 5px;
     margin-top: 10px;
     box-shadow: 0px 3px 3px rgb(75, 75, 75);
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+    font-size: 1.2rem
 }
 
 @media only screen and (min-width: 1024px) {

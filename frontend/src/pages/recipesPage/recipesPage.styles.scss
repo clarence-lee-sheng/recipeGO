@@ -22,6 +22,8 @@
     font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
     justify-content: center;
     align-items: center;
+    width: 30%;
+    max-width: 30%; 
 
 }
 
@@ -32,7 +34,9 @@
 }
 
 .recipe-img{
-    max-width: 30%;
+    width: 30vw !important;
+    max-width: 30vw !important;
+    height: auto;
 }
 
 .recipe-container{
@@ -45,7 +49,15 @@
 .retake-img-btn{
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: rgb(218, 89, 89);
-    box-shadow: 0px 5px 5px grey;
+    background-color: rgb(230, 118, 118);
+    box-shadow: 0px 5px 5px rgb(53, 53, 53);
     margin-top: 20px;
+    transition: all 0.3s ease;
+    font-family: "Grand Hotel", "Roboto", "Helvetica Nue";
+    font-size: 1.2rem;
+}
+
+.retake-img-btn:hover{
+    transform: translateX(-2px);
+    background-color: rgb(128, 240, 223);
 }

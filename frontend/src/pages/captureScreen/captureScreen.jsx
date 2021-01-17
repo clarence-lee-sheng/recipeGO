@@ -7,6 +7,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 import GenerateRecipePage from "../generateRecipePage/generateRecipePage"
 import RecipePage from "../recipesPage/recipesPage"
+import Loader from "../../components/loader/loader"
 
 const CaptureScreen = (props) => {
     const fileReader = useRef(null)
@@ -14,12 +15,14 @@ const CaptureScreen = (props) => {
     const [isImageTaken, setImageTaken] = useState(false)
     const [picture, setPicture] = useState('')
     const [ingArr, setIngArr] = useState([
-        {"name": "milk"},
+        {"name": "strawberries"},
         {"name": "cheese"},
+        {"name": "bacon"}
     ])
     const [hideIngPage, setHideIngPage] = useState(true)
     const [hideRecipePage, setHideRecipePage] = useState(true)
     const [recipes, setRecipes] = useState([])
+    const [loader, setLoader] = useState(false)
 
     useEffect(()=>{
         if (!('mediaDevices' in navigator)){
@@ -51,6 +54,17 @@ const CaptureScreen = (props) => {
             })
             
         })
+        let canvas = document.querySelector(".image-canvas")
+                        // let video = document.querySelector(".fridge-capture")
+        let context = canvas.getContext('2d')
+        var image = new Image();
+        console.log(image)
+        image.onload = function() {
+            console.log('image loaded')
+            console.log(context)
+        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        }
+        image.src = picture;
     },[])
 
     const takePicture = _ => {
@@ -67,6 +81,7 @@ const CaptureScreen = (props) => {
     }
 
     const sendImage = () => { 
+        setLoader(true)
         fetch('http://localhost:5000/', {
             method: 'POST',
             headers: {
@@ -80,7 +95,10 @@ const CaptureScreen = (props) => {
                 data = JSON.parse(data)
                 let ing_data = data.map(e => { return ({"name": e})})
                 receiveIngredients(ing_data)
+                setLoader(false)
             })
+        }).catch(err=>{
+            setLoader(false)
         })
     }
 
@@ -108,7 +126,7 @@ const CaptureScreen = (props) => {
         reader.readAsDataURL(file);
         reader.addEventListener("load", function () {
             setPicture(reader.result);
-          }, false);
+          });
     }
 
     const addIng = (ingName) => {
@@ -134,39 +152,84 @@ const CaptureScreen = (props) => {
         })
     }
 
+    const toggleToCamera = () => {
+        setHideIngPage(true)
+        setHideRecipePage(true)
+        setImageTaken(false)
+        setIngArr([])
+        setPicture('')
+        if (!('mediaDevices' in navigator)){
+            navigator.mediaDevices = {}
+        } 
+        // polyfill for devices that don't support the getUsermedia 
+        if (!('getUserMedia' in navigator.mediaDevices)){
+            navigator.mediaDevices.getUserMedia = constraints => {
+                let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia
+                if (!getUserMedia) {
+                    return Promise.reject(new Error('getUserMedia is not implemented'))
+                }
+                return new Promise((resolve, reject) => {
+                    getUserMedia.call(navigator, constraints, resolve, reject)
+                })
+            }
+        }
+
+        //set stream object to video element
+        navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+        }).then(stream => {
+            setVideoAccess(true)
+            let video = document.querySelector(".fridge-capture")
+            video.srcObject = stream
+            video.addEventListener('loadedmetadata', () => {
+                video.play()
+            })
+            
+        })
+
+    }
+
     return(
         <div className="page">
             <div className="capture-screen container">
                 <div className="capture-screen-prompt">Take a picture of your fridge :D</div>
-                {hasVideoAccess ? <video className="fridge-capture"/> : isImageTaken ? "" : <div className="no-video-access">No camera access</div>}
+                {hasVideoAccess && !picture ? <video className="fridge-capture"/> : isImageTaken ? "" : <div className="no-video-access">No camera access</div>}
                 <canvas className={`image-canvas ${isImageTaken ? "": "hidden"}`} width="320px" height="240px"/>
                 <button className="capture-btn" onClick={takePicture} disabled={isImageTaken||!hasVideoAccess ? true:false}>
                     <FontAwesomeIcon icon={faCamera}/>
                 </button>
                 <div className="buttons-container">
                 <div className="image-picker">
-                    <input ref={fileReader} onChange={async e=>{
-                        await convertFileToBlob(fileReader.current.files[0])
+                    <input ref={fileReader} onChange={e=>{
+                        console.log(picture)
+                        convertFileToBlob(fileReader.current.files[0])
+                        setTimeout(()=>{
                         let canvas = document.querySelector(".image-canvas")
                         // let video = document.querySelector(".fridge-capture")
                         let context = canvas.getContext('2d')
                         var image = new Image();
+                        console.log(image)
                         image.onload = function() {
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+                            console.log('image loaded')
+                            console.log(context)
+                            context.drawImage(image, 0, 0, canvas.width, canvas.height)
                         };
-                        console.log(picture)
+                        
                         image.src = picture;
                         setImageTaken(true)
+                    },200)
                     }} className="image-select" type="file" accept="image/*"></input>
                 </div>
                     <button className="get-ingredients-btn" onClick={sendImage}> 
-                        Get Recipes
+                        Analyze Picture
                     </button>
-                    <button className="edit-ingredients-btn" onClick={()=>setHideIngPage(false)}>add your own ingredients</button>                
+                    <button className="edit-ingredients-btn" onClick={()=>setHideIngPage(false)}>customize ingredients</button>                
                 </div>
             </div>
             <GenerateRecipePage recipify={recipify} setHideIngPage={setHideIngPage} isHidden={hideIngPage} ingArr={ingArr} addIng={addIng} delIng={delIng}/>
-            {hideRecipePage ? '':<RecipePage recipes={recipes}/>}
+            {hideRecipePage ? '':<RecipePage toggleToCamera={toggleToCamera} recipes={recipes}/>}
+            {loader? <Loader/> : ''}
         </div>
     )
 }
