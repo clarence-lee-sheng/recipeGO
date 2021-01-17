@@ -11,6 +11,7 @@ import {
 import './App.scss';
 
 import CaptureScreen from "./pages/captureScreen/captureScreen"
+import LoginScreen from "./pages/loginPage/loginPage"
 import LandingPage from "./pages/landingPage/landingPage"
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
                   <button><Link to="/login">login Page</Link></button>
               </Route>
               <Route path="/login">
-                  <div>login page</div>
+                  <div>login page hello world</div>      <LoginScreen/>
                   <button><Link to="/capture">Capture Page</Link></button>
               </Route>
               <Route path="/capture">
