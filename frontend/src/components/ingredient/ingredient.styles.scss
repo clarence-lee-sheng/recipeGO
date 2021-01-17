@@ -1,0 +1,19 @@
+.ing{
+    position:relative;
+    width: 80%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(233, 231, 231, 0.579);
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.cancel-icon{
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+}
