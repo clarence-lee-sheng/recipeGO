@@ -18,7 +18,7 @@ def image_label(filename):
     response = client.label_detection(image=image)
     # print(response)
     labels = response.label_annotations
-    return str(labels)
+    return labels
 
 
 if __name__ == "__main__":
