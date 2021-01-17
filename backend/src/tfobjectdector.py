@@ -26,6 +26,11 @@ import time
 print(tf.__version__)
 
 
+"""
+Object detection using TensorFlow Object Detect pretrained model
+"""
+
+
 def display_image(image):
     image_pil = Image.fromarray(np.uint8(image)).convert("RGB")
     image_pil.show()

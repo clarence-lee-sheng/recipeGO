@@ -6,10 +6,11 @@
     height: 100vh;
     flex-flow: column nowrap; 
     align-items: center;
+    position: relative;
 }
 
 .image-canvas{
-    width: 400px;
+    width: 350px;
     max-width:95%;   
     background-color: rgb(218, 209, 209);
     border-radius: 50px;
@@ -17,7 +18,7 @@
 
 .fridge-capture{
     border-radius: 50px;
-    width: 400px;
+    width: 350px;
     max-width:95%;
 }
 
@@ -37,7 +38,7 @@
 }
 
 .no-video-access{
-    width: 400px;
+    width: 350px;
     max-width:100%;
     height: 240px;
     display: flex;
@@ -45,7 +46,7 @@
     align-items: center;
     padding: 50px;
     background-color: rgb(218, 216, 216);
-    
+    border-radius: 50px;
 }
 
 
@@ -76,6 +77,9 @@
     text-align: center;
     padding: 20px;
     box-shadow: inset 0px 3px 3px rgb(175, 173, 173);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 }
 
 .get-ingredients-btn{
@@ -85,6 +89,13 @@
     border-radius: 5px;
     color: rgb(243, 243, 243);
     font-size: 1.05rem;
+    box-shadow: 0px 3px 3px rgb(75, 75, 75);
+}
+
+.edit-ingredients-btn{
+    width: 180px;
+    border-radius: 5px;
+    margin-top: 10px;
     box-shadow: 0px 3px 3px rgb(75, 75, 75);
 }
 

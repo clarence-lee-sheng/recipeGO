@@ -1,7 +1,6 @@
 absl-py==0.10.0
 astunparse==1.6.3
 attrs==20.3.0
-autopep8 @ file:///tmp/build/80754af9/autopep8_1596578164842/work
 cachetools==4.2.0
 certifi==2020.12.5
 chardet==4.0.0
@@ -51,7 +50,6 @@ tensorflow-datasets==1.2.0
 tensorflow-estimator==2.3.0
 tensorflow-metadata==0.26.0
 termcolor==1.1.0
-toml @ file:///tmp/build/80754af9/toml_1592853716807/work
 tqdm==4.54.1
 typing-extensions==3.7.4.3
 typing-inspect==0.6.0
@@ -59,3 +57,6 @@ urllib3==1.26.2
 Werkzeug==1.0.1
 wincertstore==0.2
 wrapt==1.12.1
+gunicorn==19.3.0
+tensorflow-hub
+flask

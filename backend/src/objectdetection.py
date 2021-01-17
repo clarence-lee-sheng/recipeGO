@@ -2,7 +2,11 @@ from PIL import Image, ImageDraw
 from google.cloud import vision
 import os
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'ServiceAccountToken.json'
+"""
+Object detection using Google Vision AI sdk
+"""
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'../ServiceAccountToken.json'
 
 
 def localize_objects(path):
@@ -40,14 +44,14 @@ def localize_objects(path):
             objectBoundary.append(
                 (vertices[i].x * im.size[0], vertices[i].y * im.size[1]))
 
+        im1 = im.crop((objectBoundary[0][0], objectBoundary[0]
+                       [1], objectBoundary[2][0], objectBoundary[2][1]))
+
         for i in range(len(objectBoundary) - 1):
             draw.line(((objectBoundary[i][0], objectBoundary[i][1]),
                        (objectBoundary[i+1][0], objectBoundary[i+1][1])), fill='red', width=4)
         draw.line(((objectBoundary[len(objectBoundary)-1][0], objectBoundary[len(objectBoundary)-1][1]),
                    (objectBoundary[0][0], objectBoundary[0][1])), fill='red', width=4)
-
-        im1 = im.crop((objectBoundary[0][0], objectBoundary[0]
-                       [1], objectBoundary[2][0], objectBoundary[2][1]))
 
         im1.save("../images/object_%s.jpg" % str(idx))
         im1.close()
@@ -56,5 +60,5 @@ def localize_objects(path):
 
 
 if __name__ == "__main__":
-    path = "../images/fridge.jpg"
+    path = "../images/fridge3.jpg"
     localize_objects(path)
