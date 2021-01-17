@@ -73,6 +73,7 @@ class LoginScreen extends Component {
         )
         break
       case "PWReset":
+          console.log(document.getElementById("phonenum").value);
         nexmo.verify.request({
          //  number: 'document.getElementById("phonenum").value',
            number: '15199028700',
