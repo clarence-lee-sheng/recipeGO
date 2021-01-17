@@ -5,11 +5,18 @@ import "./captureScreen.styles.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
+import GenerateRecipePage from "../generateRecipePage/generateRecipePage"
+
 const CaptureScreen = () => {
     const fileReader = useRef(null)
     const [hasVideoAccess, setVideoAccess] = useState(false)
     const [isImageTaken, setImageTaken] = useState(false)
     const [picture, setPicture] = useState('')
+    const [ingArr, setIngArr] = useState([
+        {"name": "milk"},
+        {"name": "cheese"},
+    ])
+    const [hideIngPage, setHideIngPage] = useState(true)
 
     useEffect(()=>{
         if (!('mediaDevices' in navigator)){
@@ -88,6 +95,18 @@ const CaptureScreen = () => {
           }, false);
     }
 
+    const addIng = (ingName) => {
+        let ingArrCopy = ingArr.slice()
+        ingArrCopy.push({"name":ingName})
+        setIngArr(ingArrCopy)
+    }
+
+    const delIng = (idx) => {
+        let ingArrCopy = ingArr.slice()
+        ingArrCopy.splice(idx, 1)
+        setIngArr(ingArrCopy)
+    }
+
     return(
         <div className="page">
             <div className="capture-screen container">
@@ -101,11 +120,13 @@ const CaptureScreen = () => {
                 <div className="image-picker">
                     <input ref={fileReader} onChange={e=>{convertFileToBlob(fileReader.current.files[0])}} className="image-select" type="file" accept="image/*"></input>
                 </div>
-                <button className="get-ingredients-btn" onClick={sendImage}> 
-                    Get Recipes
-                </button>
+                    <button className="get-ingredients-btn" onClick={sendImage}> 
+                        Get Recipes
+                    </button>
+                    <button className="edit-ingredients-btn" onClick={()=>setHideIngPage(false)}>add your own ingredients</button>                
                 </div>
             </div>
+            <GenerateRecipePage setHideIngPage={setHideIngPage} isHidden={hideIngPage} ingArr={ingArr} addIng={addIng} delIng={delIng}/>
         </div>
     )
 }
