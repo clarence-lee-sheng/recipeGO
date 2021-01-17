@@ -1,0 +1,12 @@
+
+;;uses Spoonacular API to get recipes
+
+;;ing is list of ingredients
+;;use a get request to get recipes
+
+<input type="text" id="input" onkeyup="writethis()" />
+var ing = WScript.StdIn.ReadLine();
+var ing_list = ing.split();
+
+var recipes = String(https://api.spoonacular.com/recipes/findByIngredients?ing_list)
+console.log(recipes); 
